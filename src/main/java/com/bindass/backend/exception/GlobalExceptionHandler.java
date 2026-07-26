@@ -1,5 +1,7 @@
 package com.bindass.backend.exception;
 
+import lombok.extern.slf4j.Slf4j;
+import java.util.UUID;
 import com.bindass.backend.dto.response.ApiResponse;
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 // Catches ALL exceptions thrown anywhere in the app
 // and returns a clean JSON error response
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     // 404 — Resource not found
@@ -47,10 +50,18 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error(errors));
     }
 
-    // 500 — Catch-all for unexpected errors
+    // 500 — Catch-all for unexpected errors.
+    // NEVER return ex.getMessage() to the client here — it can leak internal
+    // details (DB errors, stack context, field names). Log the real error
+    // server-side with a correlation ID, and return only that ID to the client
+    // so it can be matched against logs during support/debugging.
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGeneral(Exception ex) {
+        String errorId = UUID.randomUUID().toString();
+        log.error("Unhandled exception [errorId={}]", errorId, ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.error("Something went wrong: " + ex.getMessage()));
+                .body(ApiResponse.error(
+                        "Something went wrong. Reference ID: " + errorId
+                ));
     }
 }
