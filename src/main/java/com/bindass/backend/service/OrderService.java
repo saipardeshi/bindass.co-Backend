@@ -110,7 +110,8 @@ public class OrderService {
                         "totalAmount", saved.getTotalAmount(),
                         "amount",      (int) Math.round(saved.getTotalAmount() * 100) // paise for Razorpay SDK
                 ),
-                "razorpayOrderId", razorpayOrderId
+                "razorpayOrderId", razorpayOrderId,
+                "razorpayKeyId",   paymentService.getKeyId()
         );
     }
 
@@ -128,7 +129,7 @@ public class OrderService {
         );
         if (!valid) throw new BadRequestException("Invalid payment signature");
 
-        // 2. Update order (lookup by MongoDB ID or Razorpay Order ID)
+        // 2. Lookup order (by MongoDB ID or Razorpay Order ID)
         Order order = null;
         if (orderId != null && !orderId.isBlank()) {
             order = orderRepository.findById(orderId.trim()).orElse(null);
@@ -140,6 +141,20 @@ public class OrderService {
             throw new ResourceNotFoundException("Order not found");
         }
 
+        // 3. Authorization check — ensure order belongs to authenticated user
+        String userId = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"))
+                .getId();
+        if (!order.getUserId().equals(userId)) {
+            throw new UnauthorizedException("Not authorised to verify this order");
+        }
+
+        // 4. Idempotency guard — if already verified and paid, return existing order
+        if (order.getPaymentStatus() == PaymentStatus.PAID) {
+            log.info("Order {} is already marked PAID. Skipping re-verification.", order.getId());
+            return order;
+        }
+
         order.setStatus(OrderStatus.CONFIRMED);
         order.setPaymentStatus(PaymentStatus.PAID);
         order.setRazorpayPaymentId(razorpayPaymentId);
@@ -149,12 +164,17 @@ public class OrderService {
 
         Order saved = orderRepository.save(order);
 
-        // 3. Decrement stock for each item
+        // 5. Decrement stock for each item (safe stock adjustment)
         for (Order.OrderItem item : saved.getItems()) {
-            productService.decrementStock(item.getProductId(), item.getSize(), item.getQuantity());
+            try {
+                productService.decrementStock(item.getProductId(), item.getSize(), item.getQuantity());
+            } catch (Exception ex) {
+                log.error("Failed to decrement stock for product {} size {}: {}",
+                        item.getProductId(), item.getSize(), ex.getMessage());
+            }
         }
 
-        // 4. Send confirmation email (fire-and-forget)
+        // 6. Send confirmation email (fire-and-forget)
         userRepository.findByEmail(userEmail).ifPresent(user -> {
             try { emailService.sendOrderConfirmation(user, saved); }
             catch (Exception e) { log.error("Email failed: {}", e.getMessage()); }
