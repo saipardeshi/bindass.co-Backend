@@ -106,8 +106,9 @@ public class OrderService {
         return Map.of(
                 "order",          Map.of(
                         "_id",         saved.getId(),
+                        "id",          saved.getId(),
                         "totalAmount", saved.getTotalAmount(),
-                        "amount",      (int)(saved.getTotalAmount() * 100) // paise for Razorpay SDK
+                        "amount",      (int) Math.round(saved.getTotalAmount() * 100) // paise for Razorpay SDK
                 ),
                 "razorpayOrderId", razorpayOrderId
         );
@@ -127,9 +128,17 @@ public class OrderService {
         );
         if (!valid) throw new BadRequestException("Invalid payment signature");
 
-        // 2. Update order
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        // 2. Update order (lookup by MongoDB ID or Razorpay Order ID)
+        Order order = null;
+        if (orderId != null && !orderId.isBlank()) {
+            order = orderRepository.findById(orderId.trim()).orElse(null);
+        }
+        if (order == null && razorpayOrderId != null && !razorpayOrderId.isBlank()) {
+            order = orderRepository.findByRazorpayOrderId(razorpayOrderId.trim()).orElse(null);
+        }
+        if (order == null) {
+            throw new ResourceNotFoundException("Order not found");
+        }
 
         order.setStatus(OrderStatus.CONFIRMED);
         order.setPaymentStatus(PaymentStatus.PAID);

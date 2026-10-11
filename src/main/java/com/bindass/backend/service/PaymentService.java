@@ -21,21 +21,30 @@ public class PaymentService {
     @Value("${razorpay.key-secret}")
     private String keySecret;
 
+    public String getKeyId() {
+        return keyId != null ? keyId.trim() : "";
+    }
+
+    public String getKeySecret() {
+        return keySecret != null ? keySecret.trim() : "";
+    }
+
     public String createRazorpayOrder(double amountInRupees, String receipt)
             throws RazorpayException {
 
-        RazorpayClient client = new RazorpayClient(keyId, keySecret);
+        RazorpayClient client = new RazorpayClient(getKeyId(), getKeySecret());
 
         JSONObject options = new JSONObject();
-        options.put("amount",   (int)(amountInRupees * 100));
+        options.put("amount",   (int) Math.round(amountInRupees * 100));
         options.put("currency", "INR");
         options.put("receipt",  receipt);
         options.put("notes",    new JSONObject().put("brand", "BINDASS"));
 
         com.razorpay.Order order = client.orders.create(options);
-        log.info("Razorpay order created: " + order.get("id").toString());
+        String orderId = order.get("id").toString();
+        log.info("Razorpay order created: {}", orderId);
 
-        return order.get("id").toString();
+        return orderId;
     }
 
     public boolean verifySignature(
@@ -43,21 +52,30 @@ public class PaymentService {
             String razorpayPaymentId,
             String razorpaySignature
     ) {
+        if (razorpayOrderId == null || razorpayPaymentId == null || razorpaySignature == null) {
+            log.error("Missing signature verification parameters");
+            return false;
+        }
+
         try {
-            String payload = razorpayOrderId + "|" + razorpayPaymentId;
+            String payload = razorpayOrderId.trim() + "|" + razorpayPaymentId.trim();
 
             Mac mac = Mac.getInstance("HmacSHA256");
             SecretKeySpec secretKey = new SecretKeySpec(
-                    keySecret.getBytes(StandardCharsets.UTF_8), "HmacSHA256"
+                    getKeySecret().getBytes(StandardCharsets.UTF_8), "HmacSHA256"
             );
             mac.init(secretKey);
             byte[] hash = mac.doFinal(payload.getBytes(StandardCharsets.UTF_8));
 
             String expected = HexFormat.of().formatHex(hash);
-            return expected.equals(razorpaySignature);
+            boolean matches = expected.equalsIgnoreCase(razorpaySignature.trim());
+            if (!matches) {
+                log.warn("Signature mismatch. Expected: {}, Received: {}", expected, razorpaySignature);
+            }
+            return matches;
 
         } catch (Exception e) {
-            log.error("Signature verification failed: " + e.getMessage());
+            log.error("Signature verification failed: {}", e.getMessage(), e);
             return false;
         }
     }
@@ -65,15 +83,16 @@ public class PaymentService {
     public void initiateRefund(String paymentId, double amountInRupees)
             throws RazorpayException {
 
-        RazorpayClient client = new RazorpayClient(keyId, keySecret);
+        RazorpayClient client = new RazorpayClient(getKeyId(), getKeySecret());
 
         JSONObject refundRequest = new JSONObject();
-        refundRequest.put("amount", (int)(amountInRupees * 100));
+        refundRequest.put("amount", (int) Math.round(amountInRupees * 100));
         refundRequest.put("notes",  new JSONObject()
                 .put("reason", "Customer cancellation")
                 .put("brand",  "BINDASS"));
 
         Refund refund = client.payments.refund(paymentId, refundRequest);
-        log.info("Refund initiated: " + refund.get("id").toString());
+        String refundId = refund.get("id").toString();
+        log.info("Refund initiated: {}", refundId);
     }
 }
