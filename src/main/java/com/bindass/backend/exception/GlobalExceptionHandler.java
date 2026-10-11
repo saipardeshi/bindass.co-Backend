@@ -50,6 +50,17 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error(errors));
     }
 
+    // 503 — Database connection failure
+    @ExceptionHandler({
+            org.springframework.dao.DataAccessException.class,
+            com.mongodb.MongoException.class
+    })
+    public ResponseEntity<ApiResponse<Void>> handleDatabaseDown(Exception ex) {
+        log.error("Database connection failure: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(ApiResponse.error("Database connection error: Cannot reach MongoDB. Please ensure MongoDB is running or configure spring.data.mongodb.uri."));
+    }
+
     // 500 — Catch-all for unexpected errors.
     // NEVER return ex.getMessage() to the client here — it can leak internal
     // details (DB errors, stack context, field names). Log the real error
