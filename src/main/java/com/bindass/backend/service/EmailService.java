@@ -2,9 +2,10 @@ package com.bindass.backend.service;
 
 import com.bindass.backend.model.Order;
 import com.bindass.backend.model.User;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.mail.javamail.*;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +13,24 @@ import jakarta.mail.internet.MimeMessage;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    // JavaMailSender is optional — only injected when mail credentials are configured.
+    // If spring.mail.username is empty, this will be null and emails will be skipped gracefully.
+    @Autowired(required = false)
+    private JavaMailSender mailSender;
 
-    @Value("${app.email.from}")
+    @Value("${app.email.from:}")
     private String fromEmail;
 
     @Value("${app.client-url}")
     private String clientUrl;
+
+    /** Returns true only when mail is properly configured */
+    private boolean isMailConfigured() {
+        return mailSender != null && fromEmail != null && !fromEmail.isBlank();
+    }
 
     // ── Base HTML wrapper (dark BINDASS theme) ────────────────
     private String wrap(String content) {
@@ -56,6 +64,10 @@ public class EmailService {
 
     // ── Send helper ───────────────────────────────────────────
     private void send(String to, String subject, String htmlContent) throws Exception {
+        if (!isMailConfigured()) {
+            log.warn("Mail not configured — skipping email to {} ({})", to, subject);
+            return;
+        }
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setFrom(fromEmail);

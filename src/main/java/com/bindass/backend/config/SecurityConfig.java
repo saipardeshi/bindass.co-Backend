@@ -1,7 +1,7 @@
 package com.bindass.backend.config;
-
 import com.bindass.backend.security.CustomUserDetailsService;
 import com.bindass.backend.security.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,12 +48,18 @@ public class SecurityConfig {
                 // Disable CSRF — not needed for stateless JWT APIs
                 .csrf(AbstractHttpConfigurer::disable)
 
+                // Enable CORS — picks up our CorsFilter bean automatically
+                .cors(org.springframework.security.config.Customizer.withDefaults())
+
                 // Use stateless session (no server-side sessions with JWT)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 // Route permissions
                 .authorizeHttpRequests(auth -> auth
+
+                        // ── Allow all CORS preflight requests ─────────────
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // ── Public routes (no token needed) ──────────────
                         .requestMatchers("/api/auth/**").permitAll()
@@ -71,6 +77,15 @@ public class SecurityConfig {
 
                         // ── Everything else needs authentication ──────────
                         .anyRequest().authenticated()
+                )
+
+                // Return 401 JSON response instead of default 403 on unauthenticated requests
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setContentType("application/json");
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.getWriter().write("{\"success\":false,\"message\":\"Please sign in to continue\"}");
+                        })
                 )
 
                 // Add our JWT filter before Spring's default auth filter
