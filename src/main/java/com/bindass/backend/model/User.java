@@ -47,7 +47,12 @@ public class User {
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
-    private boolean isVerified;
+    @Builder.Default
+    private boolean isVerified = false;
+
+    // For email verification flow
+    private String verificationToken;
+    private LocalDateTime verificationTokenExpire;
 
     // For password reset flow
     private String resetPasswordToken;
