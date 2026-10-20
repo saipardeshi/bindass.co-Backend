@@ -40,8 +40,22 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<Object>> getMe(
             @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            throw new com.bindass.backend.exception.UnauthorizedException("Please sign in to continue");
+        }
         Object user = authService.getMe(userDetails.getUsername());
         return ResponseEntity.ok(ApiResponse.ok("User fetched", user));
+    }
+
+    // DELETE /api/auth/me — delete user's own account permanently
+    @DeleteMapping("/me")
+    public ResponseEntity<ApiResponse<Void>> deleteMe(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            throw new com.bindass.backend.exception.UnauthorizedException("Please sign in to continue");
+        }
+        authService.deleteAccount(userDetails.getUsername());
+        return ResponseEntity.ok(ApiResponse.ok("Your account has been deleted permanently"));
     }
 
     // PUT /api/auth/wishlist/{productId}
@@ -49,6 +63,9 @@ public class AuthController {
     public ResponseEntity<ApiResponse<Object>> toggleWishlist(
             @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable String productId) {
+        if (userDetails == null) {
+            throw new com.bindass.backend.exception.UnauthorizedException("Please sign in to continue");
+        }
         Object result = authService.toggleWishlist(userDetails.getUsername(), productId);
         return ResponseEntity.ok(ApiResponse.ok("Wishlist updated", result));
     }
@@ -68,5 +85,25 @@ public class AuthController {
             @RequestBody java.util.Map<String, String> body) {
         AuthResponse response = authService.resetPassword(token, body.get("password"));
         return ResponseEntity.ok(ApiResponse.ok("Password reset successful", response));
+    }
+
+    // POST /api/auth/verify-email
+    @PostMapping("/verify-email")
+    public ResponseEntity<ApiResponse<Void>> verifyEmail(
+            @RequestBody(required = false) java.util.Map<String, String> body,
+            @RequestParam(required = false) String token) {
+        String verificationToken = token != null ? token : (body != null ? body.get("token") : null);
+        authService.verifyEmail(verificationToken);
+        return ResponseEntity.ok(ApiResponse.ok("Email verified successfully"));
+    }
+
+    // POST /api/auth/resend-verification
+    @PostMapping("/resend-verification")
+    public ResponseEntity<ApiResponse<Void>> resendVerification(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody(required = false) java.util.Map<String, String> body) {
+        String email = (userDetails != null) ? userDetails.getUsername() : (body != null ? body.get("email") : null);
+        authService.resendVerification(email);
+        return ResponseEntity.ok(ApiResponse.ok("If your account exists and is unverified, a new link has been sent."));
     }
 }

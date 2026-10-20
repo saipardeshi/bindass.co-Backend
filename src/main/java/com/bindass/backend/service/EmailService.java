@@ -234,4 +234,24 @@ public class EmailService {
 
         send(user.getEmail(), "BINDASS — Reset Your Password", wrap(content));
     }
+
+    // ── 7. Email verification ─────────────────────────────────
+    public void sendVerificationEmail(User user, String verifyUrl) throws Exception {
+        String firstName = user.getName() != null ? user.getName().split(" ")[0] : "there";
+        String content = """
+            <h1 style="font-size:32px;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px">
+              Verify Your Email
+            </h1>
+            <p style="font-size:14px;color:#8C8C8C;line-height:1.8;margin-bottom:8px">
+              Hey %s, welcome to BINDASS. Please verify your email address to secure your account and unlock early access drops.
+            </p>
+            <a href="%s" class="btn">Verify Email Address</a>
+            <hr class="divider"/>
+            <p style="font-size:12px;color:#5C5C5C">
+              Link expires in 24 hours. If you didn't create an account, you can safely ignore this email.
+            </p>
+            """.formatted(firstName, verifyUrl);
+
+        send(user.getEmail(), "Verify your BINDASS account 🖤", wrap(content));
+    }
 }

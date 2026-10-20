@@ -27,6 +27,7 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final com.bindass.backend.security.RateLimitingFilter rateLimitingFilter;
 
     // BCrypt password encoder — hashes passwords before storing
     @Bean
@@ -61,8 +62,17 @@ public class SecurityConfig {
                         // ── Allow all CORS preflight requests ─────────────
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // ── Public routes (no token needed) ──────────────
-                        .requestMatchers("/api/auth/**").permitAll()
+                        // ── Public Auth Routes (no token needed) ──────────
+                        .requestMatchers(
+                                "/api/auth/register",
+                                "/api/auth/login",
+                                "/api/auth/forgot-password",
+                                "/api/auth/reset-password/**",
+                                "/api/auth/verify-email",
+                                "/api/auth/resend-verification"
+                        ).permitAll()
+
+                        // ── Public Storefront Routes ──────────────────────
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/reviews/**").permitAll()
                         .requestMatchers("/api/newsletter/**").permitAll()
@@ -76,6 +86,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/upload/**").hasRole("ADMIN")
 
                         // ── Everything else needs authentication ──────────
+                        // (Includes /api/auth/me, /api/auth/wishlist/**, /api/orders/**, /api/cart/**)
                         .anyRequest().authenticated()
                 )
 
@@ -88,7 +99,8 @@ public class SecurityConfig {
                         })
                 )
 
-                // Add our JWT filter before Spring's default auth filter
+                // Add rate limiting before JWT filter, and JWT filter before Spring auth filter
+                .addFilterBefore(rateLimitingFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

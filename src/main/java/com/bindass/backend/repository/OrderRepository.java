@@ -15,6 +15,9 @@ public interface OrderRepository extends MongoRepository<Order, String> {
     // All orders for a specific user, newest first
     Page<Order> findByUserIdOrderByCreatedAtDesc(String userId, Pageable pageable);
 
+    // All orders for a user (unpaginated, for account deletion/anonymization)
+    java.util.List<Order> findByUserId(String userId);
+
     // Find order by Razorpay order ID (used in payment verification)
     Optional<Order> findByRazorpayOrderId(String razorpayOrderId);
 
