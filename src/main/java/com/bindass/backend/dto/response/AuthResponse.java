@@ -1,6 +1,7 @@
 package com.bindass.backend.dto.response;
 
 import com.bindass.backend.model.enums.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Data
@@ -13,5 +14,7 @@ public class AuthResponse {
     private String name;
     private String email;
     private Role role;
+
+    @JsonProperty("isVerified")
     private boolean isVerified;
 }

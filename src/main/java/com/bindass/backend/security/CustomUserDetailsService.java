@@ -18,8 +18,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Find user in MongoDB by email
-        User user = userRepository.findByEmail(email)
+        // Find user in MongoDB by email (case-insensitive)
+        String lookupEmail = email != null ? email.trim() : "";
+        User user = userRepository.findByEmailIgnoreCase(lookupEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
         // Convert our User model into Spring Security's UserDetails
