@@ -11,6 +11,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class User {
     @Indexed(unique = true) // Creates a unique index on email field in MongoDB
     private String email;
 
+    @JsonIgnore
     private String password; // Stored as bcrypt hash — NEVER plain text
 
     @Builder.Default
@@ -48,14 +51,19 @@ public class User {
     private List<Address> addresses = new ArrayList<>();
 
     @Builder.Default
+    @JsonProperty("isVerified")
     private boolean isVerified = false;
 
     // For email verification flow
+    @JsonIgnore
     private String verificationToken;
+    @JsonIgnore
     private LocalDateTime verificationTokenExpire;
 
     // For password reset flow
+    @JsonIgnore
     private String resetPasswordToken;
+    @JsonIgnore
     private LocalDateTime resetPasswordExpire;
 
     @CreatedDate

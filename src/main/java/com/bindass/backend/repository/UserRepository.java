@@ -14,9 +14,11 @@ public interface UserRepository extends MongoRepository<User, String> {
     // Spring Data auto-generates query from method name:
     // "find User where email = ?"
     Optional<User> findByEmail(String email);
+    Optional<User> findByEmailIgnoreCase(String email);
 
     // Check if email already exists (for registration validation)
     boolean existsByEmail(String email);
+    boolean existsByEmailIgnoreCase(String email);
 
     // Find user by password reset token
     Optional<User> findByResetPasswordToken(String token);

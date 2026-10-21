@@ -42,7 +42,8 @@ public class AuthService {
 
     // ── Register ─────────────────────────────────────────────
     public AuthResponse register(RegisterRequest req) {
-        if (userRepository.existsByEmail(req.getEmail())) {
+        String email = req.getEmail().trim().toLowerCase();
+        if (userRepository.existsByEmailIgnoreCase(email)) {
             throw new BadRequestException("Email already registered");
         }
 
@@ -50,8 +51,8 @@ public class AuthService {
         String hashedVerificationToken = hashToken(rawVerificationToken);
 
         User user = User.builder()
-                .name(req.getName())
-                .email(req.getEmail())
+                .name(req.getName().trim())
+                .email(email)
                 .password(passwordEncoder.encode(req.getPassword()))
                 .role(Role.USER)
                 .isVerified(false)
@@ -74,16 +75,17 @@ public class AuthService {
 
     // ── Login ────────────────────────────────────────────────
     public AuthResponse login(LoginRequest req) {
+        String email = req.getEmail().trim().toLowerCase();
         try {
             // This triggers Spring Security to verify credentials
             authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword())
+                    new UsernamePasswordAuthenticationToken(email, req.getPassword())
             );
-        } catch (BadCredentialsException e) {
+        } catch (BadCredentialsException | InternalAuthenticationServiceException e) {
             throw new BadRequestException("Invalid email or password");
         }
 
-        User user = userRepository.findByEmail(req.getEmail())
+        User user = userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         String token = jwtProvider.generateToken(user.getEmail());
@@ -92,13 +94,13 @@ public class AuthService {
 
     // ── Get current user ─────────────────────────────────────
     public User getMe(String email) {
-        return userRepository.findByEmail(email)
+        return userRepository.findByEmailIgnoreCase(email != null ? email.trim() : "")
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     // ── Toggle wishlist ──────────────────────────────────────
     public Map<String, Object> toggleWishlist(String email, String productId) {
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByEmailIgnoreCase(email != null ? email.trim() : "")
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         List<String> wishlist = user.getWishlist();
@@ -195,7 +197,7 @@ public class AuthService {
 
     // ── Delete Account ───────────────────────────────────────
     public void deleteAccount(String email) {
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByEmailIgnoreCase(email != null ? email.trim() : "")
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         // Delete user's active cart
