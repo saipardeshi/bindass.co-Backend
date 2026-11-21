@@ -1,5 +1,6 @@
 package com.bindass.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.CreatedDate;
@@ -64,15 +65,19 @@ public class Product {
     private String weight = "380 GSM";
 
     @Builder.Default
+    @JsonProperty("isFeatured")
     private boolean isFeatured = false;
 
     @Builder.Default
+    @JsonProperty("isNew")
     private boolean isNew = true;
 
     @Builder.Default
+    @JsonProperty("isSoldOut")
     private boolean isSoldOut = false;
 
     @Builder.Default
+    @JsonProperty("isPublished")
     private boolean isPublished = true;
 
     @Builder.Default

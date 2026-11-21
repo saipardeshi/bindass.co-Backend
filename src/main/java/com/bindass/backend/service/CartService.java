@@ -42,7 +42,10 @@ public class CartService {
         // fast rather than silently storing a dangling reference.
         Product product = productRepository.findById(req.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-        if (!product.getSizes().contains(req.getSize())) {
+        if (!product.isPublished()) {
+            throw new BadRequestException("This product is not available");
+        }
+        if (product.getSizes() == null || !product.getSizes().contains(req.getSize())) {
             throw new BadRequestException("Size " + req.getSize() + " is not available for this product");
         }
 
@@ -54,7 +57,11 @@ public class CartService {
                 .orElse(null);
 
         if (existing != null) {
-            existing.setQuantity(existing.getQuantity() + req.getQuantity());
+            int newQty = existing.getQuantity() + req.getQuantity();
+            if (newQty > CartRequest.MAX_QTY_PER_LINE) {
+                throw new BadRequestException("You can keep at most " + CartRequest.MAX_QTY_PER_LINE + " of one item in your cart");
+            }
+            existing.setQuantity(newQty);
         } else {
             items.add(Cart.CartItem.builder()
                     .productId(req.getProductId())
@@ -110,7 +117,17 @@ public class CartService {
         }
         for (CartRequest.AddItemRequest item : req.getItems()) {
             try {
-                addItem(userEmail, item);
+                // guest carts come from localStorage and can hold anything — skip junk, clamp quantity,
+                // and never fail the whole merge (that would drop the shopper's entire guest cart)
+                if (item == null || item.getProductId() == null || item.getProductId().isBlank()
+                        || item.getSize() == null || item.getSize().isBlank()) {
+                    continue;
+                }
+                CartRequest.AddItemRequest safe = new CartRequest.AddItemRequest();
+                safe.setProductId(item.getProductId());
+                safe.setSize(item.getSize());
+                safe.setQuantity(Math.max(1, Math.min(item.getQuantity(), CartRequest.MAX_QTY_PER_LINE)));
+                addItem(userEmail, safe);
             } catch (ResourceNotFoundException | BadRequestException e) {
                 // A guest-cart item may reference a product that's since been
                 // removed/changed size options — skip it rather than fail
@@ -174,7 +191,7 @@ public class CartService {
                 continue;
             }
 
-            int available = product.getStock().getOrDefault(item.getSize(), 0);
+            int available = product.getStock() == null ? 0 : product.getStock().getOrDefault(item.getSize(), 0);
             boolean stockIssue = available < item.getQuantity();
 
             responseItems.add(CartResponse.Item.builder()

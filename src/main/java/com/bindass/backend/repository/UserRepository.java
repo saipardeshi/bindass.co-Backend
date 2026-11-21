@@ -25,4 +25,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     // Find user by email verification token
     Optional<User> findByVerificationToken(String token);
+
+    // Used to stop the last admin being demoted
+    long countByRole(com.bindass.backend.model.enums.Role role);
 }

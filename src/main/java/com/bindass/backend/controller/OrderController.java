@@ -85,8 +85,14 @@ public class OrderController {
             @RequestParam(defaultValue = "0")  int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(required = false)    String status) {
-        OrderStatus orderStatus = status != null
-                ? OrderStatus.valueOf(status.toUpperCase()) : null;
+        OrderStatus orderStatus = null;
+        if (status != null && !status.isBlank()) {
+            try {
+                orderStatus = OrderStatus.valueOf(status.trim().toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new com.bindass.backend.exception.BadRequestException("Unknown status: " + status);
+            }
+        }
         return ResponseEntity.ok(
                 ApiResponse.ok("All orders", orderService.getAllOrders(page, size, orderStatus))
         );

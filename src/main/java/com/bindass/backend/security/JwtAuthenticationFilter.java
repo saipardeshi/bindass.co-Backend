@@ -37,17 +37,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
             String email = tokenProvider.getEmailFromToken(token);
 
-            // 3. Load user details from DB
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            try {
+                // 3. Load user details from DB
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-            // 4. Create authentication object and put in Security Context
-            // This is how Spring knows "this request is from user X"
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities()
-                    );
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                // 4. Create authentication object and put in Security Context
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails, null, userDetails.getAuthorities()
+                        );
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (org.springframework.security.core.userdetails.UsernameNotFoundException e) {
+                // valid token for an account that no longer exists (deleted) → stay anonymous (→ 401)
+                SecurityContextHolder.clearContext();
+            }
         }
 
         // 5. Continue to next filter/controller

@@ -12,4 +12,9 @@ public class LoginRequest {
 
     @NotBlank(message = "Password is required")
     private String password;
+
+    // trim BEFORE @Email validation runs (stray spaces used to be rejected as "invalid email")
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
 }
