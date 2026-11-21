@@ -26,6 +26,7 @@ public class AdminService {
     // ── Dashboard stats ───────────────────────────────────────
     public Map<String, Object> getDashboardStats() {
         long totalOrders   = orderRepository.countByStatus(OrderStatus.CONFIRMED)
+                + orderRepository.countByStatus(OrderStatus.PROCESSING)
                 + orderRepository.countByStatus(OrderStatus.SHIPPED)
                 + orderRepository.countByStatus(OrderStatus.DELIVERED);
         long totalUsers    = userRepository.count();
@@ -105,9 +106,16 @@ public class AdminService {
     }
 
     // ── Toggle user role ──────────────────────────────────────
-    public Map<String, Object> toggleUserRole(String userId) {
+    public Map<String, Object> toggleUserRole(String callerEmail, String userId) {
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        // an admin must not be able to lock themselves (or the last admin) out
+        if (callerEmail != null && callerEmail.equalsIgnoreCase(user.getEmail())) {
+            throw new com.bindass.backend.exception.BadRequestException("You cannot change your own role");
+        }
+        if (user.getRole() == Role.ADMIN && userRepository.countByRole(Role.ADMIN) <= 1) {
+            throw new com.bindass.backend.exception.BadRequestException("Cannot demote the last admin");
+        }
         user.setRole(user.getRole() == Role.ADMIN ? Role.USER : Role.ADMIN);
         userRepository.save(user);
         return Map.of("id", user.getId(), "role", user.getRole());

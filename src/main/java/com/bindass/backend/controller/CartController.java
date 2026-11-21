@@ -71,7 +71,7 @@ public class CartController {
     @PostMapping("/merge")
     public ResponseEntity<ApiResponse<CartResponse>> mergeGuestCart(
             @AuthenticationPrincipal UserDetails user,
-            @RequestBody CartRequest.MergeRequest request) {
+            @Valid @RequestBody CartRequest.MergeRequest request) {
         return ResponseEntity.ok(
                 ApiResponse.ok("Cart merged", cartService.mergeGuestCart(user.getUsername(), request))
         );

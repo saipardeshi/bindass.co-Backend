@@ -36,9 +36,11 @@ public class AdminController {
 
     @PutMapping("/users/{id}/role")
     public ResponseEntity<ApiResponse<Map<String, Object>>> toggleRole(
+            @org.springframework.security.core.annotation.AuthenticationPrincipal
+            org.springframework.security.core.userdetails.UserDetails caller,
             @PathVariable String id) {
         return ResponseEntity.ok(
-                ApiResponse.ok("Role updated", adminService.toggleUserRole(id))
+                ApiResponse.ok("Role updated", adminService.toggleUserRole(caller.getUsername(), id))
         );
     }
 

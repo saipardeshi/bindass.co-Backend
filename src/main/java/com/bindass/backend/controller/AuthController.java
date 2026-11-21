@@ -2,6 +2,7 @@ package com.bindass.backend.controller;
 
 import com.bindass.backend.dto.request.LoginRequest;
 import com.bindass.backend.dto.request.RegisterRequest;
+import com.bindass.backend.dto.request.UpdateProfileRequest;
 import com.bindass.backend.dto.response.ApiResponse;
 import com.bindass.backend.dto.response.AuthResponse;
 import com.bindass.backend.service.AuthService;
@@ -45,6 +46,18 @@ public class AuthController {
         }
         Object user = authService.getMe(userDetails.getUsername());
         return ResponseEntity.ok(ApiResponse.ok("User fetched", user));
+    }
+
+    // PUT /api/auth/profile — update name / phone / saved addresses
+    @PutMapping("/profile")
+    public ResponseEntity<ApiResponse<Object>> updateProfile(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody UpdateProfileRequest request) {
+        if (userDetails == null) {
+            throw new com.bindass.backend.exception.UnauthorizedException("Please sign in to continue");
+        }
+        return ResponseEntity.ok(ApiResponse.ok("Profile updated",
+                authService.updateProfile(userDetails.getUsername(), request)));
     }
 
     // DELETE /api/auth/me — delete user's own account permanently

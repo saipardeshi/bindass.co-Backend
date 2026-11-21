@@ -20,7 +20,8 @@ public class ProductController {
 
     private final ProductService productService;
 
-    // GET /api/products?page=0&size=12&sort=newest&minPrice=&maxPrice=&sale=false
+    // GET /api/products?page=0&size=12&sort=newest&minPrice=&maxPrice=&sizes=M,L&sale=false&q=hoodie
+    // All filters combine. size is capped at 50; negative page / size<1 → 400.
     @GetMapping
     public ResponseEntity<ApiResponse<Page<Product>>> getProducts(
             @RequestParam(defaultValue = "0")     int page,
@@ -29,12 +30,24 @@ public class ProductController {
             @RequestParam(required = false)       Double minPrice,
             @RequestParam(required = false)       Double maxPrice,
             @RequestParam(required = false)       List<String> sizes,
-            @RequestParam(defaultValue = "false") boolean sale
+            @RequestParam(defaultValue = "false") boolean sale,
+            @RequestParam(required = false)       String q
     ) {
         Page<Product> products = productService.getProducts(
-                page, size, sort, minPrice, maxPrice, sizes, sale
+                page, size, sort, minPrice, maxPrice, sizes, sale, q
         );
         return ResponseEntity.ok(ApiResponse.ok("Products fetched", products));
+    }
+
+    // GET /api/products/search?q=hoodie  (declared before /{slug}; literal paths win)
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<Page<Product>>> search(
+            @RequestParam String q,
+            @RequestParam(defaultValue = "0")  int page,
+            @RequestParam(defaultValue = "12") int size
+    ) {
+        return ResponseEntity.ok(ApiResponse.ok("Search results",
+                productService.getProducts(page, size, "newest", null, null, null, false, q)));
     }
 
     @GetMapping("/featured")

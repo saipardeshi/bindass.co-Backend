@@ -1,0 +1,1902 @@
+[
+  {
+    "name": "Shadow Block Hoodie",
+    "slug": "shadow-block-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2499,
+    "originalPrice": 3199,
+    "discount": 22,
+    "images": [
+      "04fa1b239c87c925221839f4fdd14fbe_jpc0xg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 8,
+      "S": 13,
+      "M": 18,
+      "L": 23,
+      "XL": 10,
+      "XXL": 15
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": true,
+    "isNew": true,
+    "totalSold": 120
+  },
+  {
+    "name": "Noir Street Hoodie",
+    "slug": "noir-street-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2299,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "09c14caaec87319b9505427d1fa1ae53_snesau"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 15,
+      "S": 20,
+      "M": 25,
+      "L": 12,
+      "XL": 17,
+      "XXL": 22
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": true,
+    "isNew": true,
+    "totalSold": 114
+  },
+  {
+    "name": "Premium Drop Hoodie",
+    "slug": "premium-drop-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2799,
+    "originalPrice": 3499,
+    "discount": 20,
+    "images": [
+      "0949a3757008088d45d4b7a39e861b36_hfqvgk"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 22,
+      "S": 9,
+      "M": 14,
+      "L": 19,
+      "XL": 24,
+      "XXL": 11
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": true,
+    "isNew": true,
+    "totalSold": 108
+  },
+  {
+    "name": "Void Series Hoodie",
+    "slug": "void-series-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2699,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "7c4c4793bd2de27f8f33b1fe143e68a3_helqqb"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 11,
+      "S": 16,
+      "M": 21,
+      "L": 8,
+      "XL": 13,
+      "XXL": 18
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": true,
+    "isNew": true,
+    "totalSold": 102
+  },
+  {
+    "name": "Tactical Pull Hoodie",
+    "slug": "tactical-pull-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 3499,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "11b74b65d3f58353f0e8a89ebef7f8e9_r5pkje"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 18,
+      "S": 23,
+      "M": 10,
+      "L": 15,
+      "XL": 20,
+      "XXL": 25
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": true,
+    "isNew": true,
+    "totalSold": 96
+  },
+  {
+    "name": "Club Black Hoodie",
+    "slug": "club-black-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2799,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "b68f66df131f426c9c4293de87a66968_ld9esi"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 25,
+      "S": 12,
+      "M": 17,
+      "L": 22,
+      "XL": 9,
+      "XXL": 14
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": true,
+    "isNew": true,
+    "totalSold": 90
+  },
+  {
+    "name": "Crest Embroidered Hoodie",
+    "slug": "crest-embroidered-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 3099,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "feb19ee3b1dc442bfc0a4b3c56503a6c_yeh9ev"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 14,
+      "S": 19,
+      "M": 24,
+      "L": 11,
+      "XL": 16,
+      "XXL": 21
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": true,
+    "isNew": true,
+    "totalSold": 84
+  },
+  {
+    "name": "Monogram Fleece Hoodie",
+    "slug": "monogram-fleece-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 3199,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "5cdaab5bfdf6296f55deb61811685e45_dhpehl"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 21,
+      "S": 8,
+      "M": 13,
+      "L": 18,
+      "XL": 23,
+      "XXL": 10
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": true,
+    "isNew": true,
+    "totalSold": 78
+  },
+  {
+    "name": "LA Wash Hoodie",
+    "slug": "la-wash-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2299,
+    "originalPrice": 2799,
+    "discount": 18,
+    "images": [
+      "e2ef98fba55320fac63538b3e27132cb_al66lw"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 10,
+      "S": 15,
+      "M": 20,
+      "L": 25,
+      "XL": 12,
+      "XXL": 17
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 72
+  },
+  {
+    "name": "Colorblock Kangaroo Hoodie",
+    "slug": "colorblock-kangaroo-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2399,
+    "originalPrice": 2999,
+    "discount": 20,
+    "images": [
+      "e6db31232a2369369581001c111d53e7_pde1t1"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 17,
+      "S": 22,
+      "M": 9,
+      "L": 14,
+      "XL": 19,
+      "XXL": 24
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 66
+  },
+  {
+    "name": "Urban Drawstring Hoodie",
+    "slug": "urban-drawstring-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2599,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "8ca8a1bb3a5991499a869ac497a5da6e_z7ncww"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 24,
+      "S": 11,
+      "M": 16,
+      "L": 21,
+      "XL": 8,
+      "XXL": 13
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 60
+  },
+  {
+    "name": "Thermal Lined Hoodie",
+    "slug": "thermal-lined-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 3199,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "8851175913f2fa522a694960e20f7d23_lrog5e"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 13,
+      "S": 18,
+      "M": 23,
+      "L": 10,
+      "XL": 15,
+      "XXL": 20
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 54
+  },
+  {
+    "name": "Colorblock Block Mens Hoodie",
+    "slug": "colorblock-block-mens-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2499,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475917/Cord%C3%A3o_Bolso_Bloco_de_cores_ocasional_Su%C3%A9ter_Masculino_mkb334.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 20,
+      "S": 25,
+      "M": 12,
+      "L": 17,
+      "XL": 22,
+      "XXL": 9
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 48
+  },
+  {
+    "name": "Zanzea Oversized Hoodie",
+    "slug": "zanzea-oversized-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2299,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475916/zanzea___women_fashion_outfits_g8hoir.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 9,
+      "S": 14,
+      "M": 19,
+      "L": 24,
+      "XL": 11,
+      "XXL": 16
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 42
+  },
+  {
+    "name": "Best Premium Hoodie",
+    "slug": "best-premium-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2799,
+    "originalPrice": 3499,
+    "discount": 20,
+    "images": [
+      "v1780475916/Best_jnuobj.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 16,
+      "S": 21,
+      "M": 8,
+      "L": 13,
+      "XL": 18,
+      "XXL": 23
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 36
+  },
+  {
+    "name": "Colorblock Pocket Hoodie",
+    "slug": "colorblock-pocket-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2599,
+    "originalPrice": 3199,
+    "discount": 19,
+    "images": [
+      "v1780475916/Colorblock_Drawstring_Pocket_Hoodie_muzi37.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 23,
+      "S": 10,
+      "M": 15,
+      "L": 20,
+      "XL": 25,
+      "XXL": 12
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 30
+  },
+  {
+    "name": "Letter Colorblock Hoodie",
+    "slug": "letter-colorblock-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2899,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475916/Guys_Letter_Colorblock_Kangaroo_Pocket_Drawstring_Hoodie_tdnwng.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 12,
+      "S": 17,
+      "M": 22,
+      "L": 9,
+      "XL": 14,
+      "XXL": 19
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 24
+  },
+  {
+    "name": "Kangaroo Drawstring Hoodie",
+    "slug": "kangaroo-drawstring-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2399,
+    "originalPrice": 2999,
+    "discount": 20,
+    "images": [
+      "v1780475915/COLORBLOCK_KANGROO_POCKET_DRAWSTRING_HOODI_eafyfn.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 19,
+      "S": 24,
+      "M": 11,
+      "L": 16,
+      "XL": 21,
+      "XXL": 8
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 18
+  },
+  {
+    "name": "Thermal Pocket Hoodie",
+    "slug": "thermal-pocket-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 3199,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475915/Colorblock_Drawstring_Pocket_Thermal_Lined_Hoodie_mma4sx.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 8,
+      "S": 13,
+      "M": 18,
+      "L": 23,
+      "XL": 10,
+      "XXL": 15
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 12
+  },
+  {
+    "name": "Letter Embroidered Hoodie",
+    "slug": "letter-embroidered-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 3499,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475914/Mens_Letter_Embroidered_Colorblock_Stitching_Street_Drawstring_Hoodies_qtmbyh.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 15,
+      "S": 20,
+      "M": 25,
+      "L": 12,
+      "XL": 17,
+      "XXL": 22
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 6
+  },
+  {
+    "name": "Graphic Colourblock Hoodie",
+    "slug": "graphic-colourblock-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2199,
+    "originalPrice": 2799,
+    "discount": 21,
+    "images": [
+      "v1780475914/Boys_Letter_Graphic_Colourblock_Hoodie_hgjuwm.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 22,
+      "S": 9,
+      "M": 14,
+      "L": 19,
+      "XL": 24,
+      "XXL": 11
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Casual Cotton Hoodie",
+    "slug": "casual-cotton-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2299,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475914/Color-Block_Casual_Cotton-Blend_%E5%82%A8%E5%A4%87%E6%AC%BE_-_Anniecloth_wdmq4n.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 11,
+      "S": 16,
+      "M": 21,
+      "L": 8,
+      "XL": 13,
+      "XXL": 18
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Colorblock Casual Hoodie",
+    "slug": "colorblock-casual-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2599,
+    "originalPrice": 3199,
+    "discount": 19,
+    "images": [
+      "v1780475900/Cord%C3%A3o_Bolso_Bloco_de_cores_ocasional_Su%C3%A9ter_Masculino_hk5xz6.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 18,
+      "S": 23,
+      "M": 10,
+      "L": 15,
+      "XL": 20,
+      "XXL": 25
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Simple Drawstring Hoodie",
+    "slug": "simple-drawstring-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 1999,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475578/Cord%C3%A3o_Bolso_Simples_ocasional_Su%C3%A9ter_Masculino_mvnxvo.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 25,
+      "S": 12,
+      "M": 17,
+      "L": 22,
+      "XL": 9,
+      "XXL": 14
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Orange Unisex Hoodie",
+    "slug": "orange-unisex-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2699,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475578/YHWH_Unisex_Hooded_Sweatshirt_-_Orange___L_zq8vyj.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 14,
+      "S": 19,
+      "M": 24,
+      "L": 11,
+      "XL": 16,
+      "XXL": 21
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Velvet Shoulder Hoodie",
+    "slug": "velvet-shoulder-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 3299,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475577/Men_s_Knitted_Fit_Basic_Style_Shoulder_Hoodie_With_Velvet_Green_Sweatshirt_Suitable_For_Autumn_And_Winter_p62usz.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 21,
+      "S": 8,
+      "M": 13,
+      "L": 18,
+      "XL": 23,
+      "XXL": 10
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Navy Blue Aesthetic Hoodie",
+    "slug": "navy-blue-aesthetic-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2499,
+    "originalPrice": 2999,
+    "discount": 17,
+    "images": [
+      "v1780475577/Navy_blue_aesthetic_hoodie_vugnwi.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 10,
+      "S": 15,
+      "M": 20,
+      "L": 25,
+      "XL": 12,
+      "XXL": 17
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Yellow White Hoodie",
+    "slug": "yellow-white-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2299,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475577/Yellow-white_hoodie_dayixi.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 17,
+      "S": 22,
+      "M": 9,
+      "L": 14,
+      "XL": 19,
+      "XXL": 24
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Classic Drop Hoodie",
+    "slug": "classic-drop-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2799,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475577/Hoodie_lkdu4n.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 24,
+      "S": 11,
+      "M": 16,
+      "L": 21,
+      "XL": 8,
+      "XXL": 13
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Heavyweight Hoodie",
+    "slug": "heavyweight-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 1999,
+    "originalPrice": 2499,
+    "discount": 20,
+    "images": [
+      "v1780475577/download_wpbw6c.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 13,
+      "S": 18,
+      "M": 23,
+      "L": 10,
+      "XL": 15,
+      "XXL": 20
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Urban Street Hoodie",
+    "slug": "urban-street-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 1799,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475577/13_Per_Hoodie_Wholesale_is_available_from_Bangladesh_ittxie.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 20,
+      "S": 25,
+      "M": 12,
+      "L": 17,
+      "XL": 22,
+      "XXL": 9
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "White Orange Hoodie",
+    "slug": "white-orange-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2599,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475576/White-orange_hoodie_kgrfpp.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 9,
+      "S": 14,
+      "M": 19,
+      "L": 24,
+      "XL": 11,
+      "XXL": 16
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Drop Oversized Hoodie",
+    "slug": "drop-oversized-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2899,
+    "originalPrice": 3499,
+    "discount": 17,
+    "images": [
+      "v1780475576/Best_jigb3t.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 16,
+      "S": 21,
+      "M": 8,
+      "L": 13,
+      "XL": 18,
+      "XXL": 23
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Two Tone Hoodie",
+    "slug": "two-tone-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2999,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475576/Plus_Drop_Shoulder_Two_Tone_Drawstring_Hoodie_iuwyst.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 23,
+      "S": 10,
+      "M": 15,
+      "L": 20,
+      "XL": 25,
+      "XXL": 12
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Pocket Casual Hoodie",
+    "slug": "pocket-casual-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2399,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475576/Cord%C3%A3o_Bolso_Bloco_de_cores_ocasional_Su%C3%A9ter_Masculino_naez1z.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 12,
+      "S": 17,
+      "M": 22,
+      "L": 9,
+      "XL": 14,
+      "XXL": 19
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Thermal Colorblock Hoodie",
+    "slug": "thermal-colorblock-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 3099,
+    "originalPrice": 3799,
+    "discount": 18,
+    "images": [
+      "v1780475576/Colorblock_Drawstring_Pocket_Thermal_Lined_Hoodie_nxojbd.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 19,
+      "S": 24,
+      "M": 11,
+      "L": 16,
+      "XL": 21,
+      "XXL": 8
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Drawstring Vol2 Hoodie",
+    "slug": "drawstring-vol2-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2499,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475576/Colorblock_Drawstring_Pocket_Hoodie_ynean5.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 8,
+      "S": 13,
+      "M": 18,
+      "L": 23,
+      "XL": 10,
+      "XXL": 15
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  },
+  {
+    "name": "Street Fashion Hoodie",
+    "slug": "street-fashion-hoodie",
+    "description": "Crafted from 380 GSM heavyweight French terry fabric. Dropped shoulders, extended hem, ribbed cuffs. A silhouette engineered for presence.",
+    "price": 2699,
+    "originalPrice": null,
+    "discount": 0,
+    "images": [
+      "v1780475575/zanzea___women_fashion_outfits_ksmynu.jpg"
+    ],
+    "category": "Unisex Hoodie",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "XS": 15,
+      "S": 20,
+      "M": 25,
+      "L": 12,
+      "XL": 17,
+      "XXL": 22
+    },
+    "details": [
+      "380 GSM French Terry",
+      "100% Ring-Spun Cotton",
+      "Dropped Shoulder Cut",
+      "Extended Hem 70cm",
+      "Ribbed Cuffs & Hem",
+      "Unisex Oversized Fit"
+    ],
+    "care": [
+      "Cold machine wash",
+      "Do not tumble dry",
+      "Iron inside out",
+      "Do not bleach"
+    ],
+    "tags": [
+      "hoodie",
+      "unisex",
+      "streetwear"
+    ],
+    "featured": false,
+    "isNew": false,
+    "totalSold": 0
+  }
+]

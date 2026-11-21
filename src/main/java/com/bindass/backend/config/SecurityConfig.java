@@ -59,6 +59,10 @@ public class SecurityConfig {
                 // Route permissions
                 .authorizeHttpRequests(auth -> auth
 
+                        // Container error dispatches must not be re-authenticated, otherwise
+                        // every sendError() (e.g. a 403) is rewritten into a 401
+                        .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.ERROR).permitAll()
+
                         // ── Allow all CORS preflight requests ─────────────
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
@@ -92,6 +96,12 @@ public class SecurityConfig {
 
                 // Return 401 JSON response instead of default 403 on unauthenticated requests
                 .exceptionHandling(ex -> ex
+                        // Signed in but not allowed → 403 JSON (was surfacing as 401/500)
+                        .accessDeniedHandler((request, response, accessDenied) -> {
+                            response.setContentType("application/json");
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            response.getWriter().write("{\"success\":false,\"message\":\"You do not have permission to do that\"}");
+                        })
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setContentType("application/json");
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
