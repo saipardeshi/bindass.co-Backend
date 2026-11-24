@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.HexFormat;
+import java.util.Locale;
 
 @Service
 @Slf4j
@@ -21,12 +23,20 @@ public class PaymentService {
     @Value("${razorpay.key-secret}")
     private String keySecret;
 
+    /** Secret you type into Razorpay Dashboard → Webhooks. NOT the API key secret. */
+    @Value("${razorpay.webhook-secret:}")
+    private String webhookSecret;
+
     public String getKeyId() {
         return keyId != null ? keyId.trim() : "";
     }
 
     public String getKeySecret() {
         return keySecret != null ? keySecret.trim() : "";
+    }
+
+    public boolean isWebhookConfigured() {
+        return webhookSecret != null && !webhookSecret.isBlank();
     }
 
     public String createRazorpayOrder(double amountInRupees, String receipt)
@@ -47,6 +57,7 @@ public class PaymentService {
         return orderId;
     }
 
+    /** Checks the signature the Razorpay popup hands to the browser: HMAC(orderId|paymentId). */
     public boolean verifySignature(
             String razorpayOrderId,
             String razorpayPaymentId,
@@ -59,23 +70,35 @@ public class PaymentService {
 
         try {
             String payload = razorpayOrderId.trim() + "|" + razorpayPaymentId.trim();
-
-            Mac mac = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secretKey = new SecretKeySpec(
-                    getKeySecret().getBytes(StandardCharsets.UTF_8), "HmacSHA256"
-            );
-            mac.init(secretKey);
-            byte[] hash = mac.doFinal(payload.getBytes(StandardCharsets.UTF_8));
-
-            String expected = HexFormat.of().formatHex(hash);
-            boolean matches = expected.equalsIgnoreCase(razorpaySignature.trim());
+            String expected = hmacSha256Hex(payload.getBytes(StandardCharsets.UTF_8), getKeySecret());
+            boolean matches = constantTimeEquals(expected, razorpaySignature.trim());
             if (!matches) {
-                log.warn("Signature mismatch. Expected: {}, Received: {}", expected, razorpaySignature);
+                // never log the expected value: it IS the valid signature for this payment
+                log.warn("Payment signature mismatch for Razorpay order {}", razorpayOrderId.trim());
             }
             return matches;
 
         } catch (Exception e) {
-            log.error("Signature verification failed: {}", e.getMessage(), e);
+            log.error("Signature verification failed: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Checks a Razorpay webhook: the X-Razorpay-Signature header must equal
+     * HMAC-SHA256(raw request body, webhook secret). The RAW bytes are required —
+     * re-serialising parsed JSON would change them and break the signature.
+     * Returns false whenever no webhook secret is configured (never accept unsigned calls).
+     */
+    public boolean verifyWebhookSignature(byte[] rawBody, String signature) {
+        if (!isWebhookConfigured() || rawBody == null || signature == null || signature.isBlank()) {
+            return false;
+        }
+        try {
+            String expected = hmacSha256Hex(rawBody, webhookSecret.trim());
+            return constantTimeEquals(expected, signature.trim());
+        } catch (Exception e) {
+            log.error("Webhook signature verification failed: {}", e.getMessage());
             return false;
         }
     }
@@ -94,5 +117,20 @@ public class PaymentService {
         Refund refund = client.payments.refund(paymentId, refundRequest);
         String refundId = refund.get("id").toString();
         log.info("Refund initiated: {}", refundId);
+    }
+
+    // ── helpers ──────────────────────────────────────────────
+
+    private static String hmacSha256Hex(byte[] data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
+        return HexFormat.of().formatHex(mac.doFinal(data));
+    }
+
+    /** Constant-time, case-insensitive hex comparison (no early exit on the first wrong byte). */
+    private static boolean constantTimeEquals(String a, String b) {
+        return MessageDigest.isEqual(
+                a.toLowerCase(Locale.ROOT).getBytes(StandardCharsets.UTF_8),
+                b.toLowerCase(Locale.ROOT).getBytes(StandardCharsets.UTF_8));
     }
 }

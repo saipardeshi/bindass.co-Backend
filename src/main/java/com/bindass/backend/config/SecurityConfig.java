@@ -82,6 +82,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/newsletter/**").permitAll()
                         .requestMatchers("/health").permitAll()
 
+                        // ── Razorpay server-to-server webhook (no JWT; authenticated by HMAC signature) ──
+                        .requestMatchers(HttpMethod.POST, "/api/payments/webhook").permitAll()
+
                         // ── Admin only ────────────────────────────────────
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,   "/api/products").hasRole("ADMIN")
