@@ -32,6 +32,7 @@ REST API for BINDASS, a premium unisex hoodie D2C brand. Built with Spring Boot 
 ## Security & Production Hardening
 
 - **Payments:** a payment signature is only accepted for the order it was issued for; orders are claimed atomically (`PENDING → CONFIRMED`), so a payment cannot be replayed onto another order or confirm a cancelled one.
+- **Webhook safety net:** if the customer pays but the browser never reaches `/verify-payment` (tab closed, network drop), Razorpay's `payment.captured` / `order.paid` webhook confirms the order. See *Razorpay webhook* below.
 - **Stock:** reserved with an atomic conditional update at payment time and restored only if it was actually taken. A stock shortage after payment is flagged in the order history for manual handling.
 - **Cancellations:** paid orders are refunded; a failed refund marks the order `REFUND_FAILED` instead of leaving it looking paid.
 - **Auth Rate Limiting:** sliding-window limiter on login, register, forgot/reset-password, resend-verification and newsletter, keyed on the real client IP.
@@ -40,6 +41,16 @@ REST API for BINDASS, a premium unisex hoodie D2C brand. Built with Spring Boot 
 - **Email Verification:** token-based flow (`/api/auth/verify-email`, `/api/auth/resend-verification`).
 - **Account Deletion:** wipe (`DELETE /api/auth/me`) with cart + review purge and order anonymization.
 - **Database Backups:** `mongodump` / `mongorestore` scripts with 7-day retention (see `docs/DATABASE_BACKUPS.md`).
+
+## Razorpay webhook
+
+`POST /api/payments/webhook` — public, authenticated only by the `X-Razorpay-Signature` HMAC of the raw request body.
+
+1. Pick a secret (`openssl rand -hex 32`) and put it in `.env` as `razorpay.webhook-secret`. **With no secret set the endpoint rejects every call (503).**
+2. Razorpay Dashboard → Settings → Webhooks → Add: URL `https://<your-api-host>/api/payments/webhook`, the **same secret**, events `payment.captured` and `order.paid` (optionally `payment.failed`).
+3. Local testing needs a public URL (e.g. `ngrok http 5000`) — Razorpay can't call localhost.
+
+Behaviour: confirms a PENDING order exactly like the browser callback (same atomic claim, stock, email), so whichever arrives first wins and the other is a no-op. A payment whose amount/currency differs from the order is **not** applied and is noted in the order history. A payment that lands on an already-cancelled order is refunded automatically (`REFUND_FAILED` if the gateway refuses).
 
 ## API notes
 
@@ -53,4 +64,3 @@ REST API for BINDASS, a premium unisex hoodie D2C brand. Built with Spring Boot 
 - No refresh-token rotation
 - No Docker Compose / CI pipeline yet
 - Spring Boot 3.2.x is past community support — plan an upgrade to a supported line
-- Razorpay webhooks are not implemented (payment confirmation relies on the browser callback)

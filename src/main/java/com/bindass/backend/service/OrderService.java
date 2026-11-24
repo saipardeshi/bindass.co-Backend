@@ -188,33 +188,46 @@ public class OrderService {
             throw new BadRequestException("This order has already been paid");
         }
 
-        // 6. Atomically claim PENDING → CONFIRMED/PAID. A cancelled order can never be re-confirmed,
-        //    and two concurrent callbacks can't both win.
+        // 6–8. Claim the order, take stock, send the email (same code path as the webhook)
+        return confirmPayment(order, razorpayPaymentId, razorpaySignature.trim(), "Payment verified");
+    }
+
+    /**
+     * Atomically confirms a PENDING order as PAID, takes stock and sends the confirmation email.
+     * Shared by the browser callback ({@link #verifyPayment}) and the Razorpay webhook
+     * ({@link #handleCapturedPayment}) so both behave identically and whichever arrives
+     * second is a harmless no-op.
+     *
+     * @param signature the browser-side payment signature, or null when confirmed by webhook
+     */
+    private Order confirmPayment(Order order, String paymentId, String signature, String note) {
+        // Atomically claim PENDING → CONFIRMED/PAID. A cancelled order can never be re-confirmed,
+        // and two concurrent callbacks can't both win.
         Query claimQuery = new Query(Criteria.where("id").is(order.getId())
                 .and("status").is(OrderStatus.PENDING)
                 .and("paymentStatus").is(PaymentStatus.PENDING));
         Update claim = new Update()
                 .set("status", OrderStatus.CONFIRMED)
                 .set("paymentStatus", PaymentStatus.PAID)
-                .set("razorpayPaymentId", razorpayPaymentId)
-                .set("razorpaySignature", razorpaySignature.trim())
+                .set("razorpayPaymentId", paymentId)
                 .set("updatedAt", LocalDateTime.now())
-                .push("statusHistory", history("CONFIRMED", "Payment verified"));
+                .push("statusHistory", history("CONFIRMED", note));
+        if (signature != null) claim.set("razorpaySignature", signature);
         Order confirmed = mongoTemplate.findAndModify(
                 claimQuery, claim, FindAndModifyOptions.options().returnNew(true), Order.class);
 
         if (confirmed == null) {
             Order current = orderRepository.findById(order.getId()).orElse(order);
             if (current.getPaymentStatus() == PaymentStatus.PAID
-                    && razorpayPaymentId.equals(current.getRazorpayPaymentId())) {
+                    && paymentId.equals(current.getRazorpayPaymentId())) {
                 return current; // lost a benign race against the identical callback
             }
             throw new BadRequestException("This order is " + current.getStatus()
                     + " and can no longer be paid");
         }
 
-        // 7. Take stock atomically. If a size sold out in the meantime the customer HAS paid,
-        //    so keep the order but flag it loudly for manual handling (refund / restock).
+        // Take stock atomically. If a size sold out in the meantime the customer HAS paid,
+        // so keep the order but flag it loudly for manual handling (refund / restock).
         List<String> shortages = new ArrayList<>();
         for (Order.OrderItem item : confirmed.getItems()) {
             boolean ok;
@@ -227,21 +240,107 @@ public class OrderService {
             if (!ok) shortages.add(item.getName() + " (" + item.getSize() + " ×" + item.getQuantity() + ")");
         }
         if (!shortages.isEmpty()) {
-            String note = "STOCK SHORTAGE after payment — manual review/refund needed: " + String.join(", ", shortages);
-            log.error("Order {}: {}", confirmed.getId(), note);
-            mongoTemplate.updateFirst(new Query(Criteria.where("id").is(confirmed.getId())),
-                    new Update().push("statusHistory", history("CONFIRMED", note)), Order.class);
+            String shortageNote = "STOCK SHORTAGE after payment — manual review/refund needed: " + String.join(", ", shortages);
+            log.error("Order {}: {}", confirmed.getId(), shortageNote);
+            addHistory(confirmed.getId(), "CONFIRMED", shortageNote);
             confirmed = orderRepository.findById(confirmed.getId()).orElse(confirmed);
         }
 
-        // 8. Confirmation email (fire-and-forget)
+        // Confirmation email (fire-and-forget)
         final Order result = confirmed;
-        userRepository.findByEmailIgnoreCase(userEmail).ifPresent(user -> {
+        userRepository.findById(result.getUserId()).ifPresent(user -> {
             try { emailService.sendOrderConfirmation(user, result); }
             catch (Exception e) { log.error("Email failed: {}", e.getMessage()); }
         });
 
         return confirmed;
+    }
+
+    // ── Razorpay webhook: payment captured ───────────────────
+    /**
+     * Called by the webhook controller AFTER it has verified Razorpay's signature.
+     * It is the safety net for "customer paid but the browser never reached /verify-payment"
+     * (tab closed, network drop, crash). It never throws for business reasons — Razorpay
+     * retries any non-2xx response, and retrying can't fix a business-rule rejection.
+     *
+     * @param amountPaise amount Razorpay actually captured, in paise
+     */
+    public void handleCapturedPayment(String razorpayOrderId, String paymentId, long amountPaise, String currency) {
+        if (isBlank(razorpayOrderId) || isBlank(paymentId)) {
+            log.warn("Webhook: capture event without order/payment id — ignored");
+            return;
+        }
+        razorpayOrderId = razorpayOrderId.trim();
+        paymentId = paymentId.trim();
+
+        Order order = orderRepository.findByRazorpayOrderId(razorpayOrderId).orElse(null);
+        if (order == null) {
+            log.warn("Webhook: no order for Razorpay order {} (payment {}) — ignored", razorpayOrderId, paymentId);
+            return;
+        }
+
+        // Never confirm if what was charged isn't what we asked Razorpay to charge.
+        long expectedPaise = Math.round(order.getTotalAmount() * 100);
+        if (amountPaise != expectedPaise || !"INR".equalsIgnoreCase(currency)) {
+            String note = "Webhook payment " + paymentId + " NOT applied: captured " + amountPaise + " "
+                    + currency + " but order expects " + expectedPaise + " INR — review manually";
+            log.error("Order {}: {}", order.getId(), note);
+            addHistory(order.getId(), order.getStatus().name(), note);
+            return;
+        }
+
+        if (order.getPaymentStatus() == PaymentStatus.PAID) {
+            log.info("Webhook: order {} already PAID — nothing to do", order.getId());
+            return; // the browser callback got there first
+        }
+
+        if (order.getStatus() == OrderStatus.CANCELLED) {
+            refundLatePayment(order, paymentId);
+            return;
+        }
+
+        try {
+            confirmPayment(order, paymentId, null, "Payment confirmed by Razorpay webhook");
+            log.info("Webhook: order {} confirmed via payment {}", order.getId(), paymentId);
+        } catch (BadRequestException e) {
+            // e.g. a different payment already confirmed it, or it was cancelled a moment ago
+            log.warn("Webhook: order {} not confirmed — {}", order.getId(), e.getMessage());
+        }
+    }
+
+    /**
+     * The customer paid for an order that was cancelled in the meantime → give the money back.
+     * The order is claimed atomically first (so duplicate webhook deliveries can't refund twice)
+     * and parked in REFUND_FAILED — the safe "needs a human" state — until the refund succeeds.
+     */
+    private void refundLatePayment(Order order, String paymentId) {
+        Query q = new Query(Criteria.where("id").is(order.getId())
+                .and("status").is(OrderStatus.CANCELLED)
+                .and("paymentStatus").is(PaymentStatus.PENDING));
+        Update u = new Update()
+                .set("paymentStatus", PaymentStatus.REFUND_FAILED)
+                .set("razorpayPaymentId", paymentId)
+                .set("updatedAt", LocalDateTime.now())
+                .push("statusHistory", history("CANCELLED", "Payment " + paymentId + " captured after cancellation — refunding"));
+        Order claimed = mongoTemplate.findAndModify(q, u, FindAndModifyOptions.options().returnNew(false), Order.class);
+        if (claimed == null) return; // another delivery is already handling it
+
+        try {
+            paymentService.initiateRefund(paymentId, order.getTotalAmount());
+            mongoTemplate.updateFirst(new Query(Criteria.where("id").is(order.getId())),
+                    new Update().set("paymentStatus", PaymentStatus.REFUNDED)
+                            .push("statusHistory", history("CANCELLED", "Late payment refunded")),
+                    Order.class);
+            log.info("Webhook: refunded late payment {} for cancelled order {}", paymentId, order.getId());
+        } catch (Exception e) {
+            log.error("Webhook: refund of late payment {} for order {} FAILED: {}", paymentId, order.getId(), e.getMessage());
+            addHistory(order.getId(), "CANCELLED", "Refund FAILED — issue it manually from the Razorpay dashboard");
+        }
+    }
+
+    private void addHistory(String orderId, String status, String note) {
+        mongoTemplate.updateFirst(new Query(Criteria.where("id").is(orderId)),
+                new Update().push("statusHistory", history(status, note)), Order.class);
     }
 
     // ── Get user's orders ────────────────────────────────────

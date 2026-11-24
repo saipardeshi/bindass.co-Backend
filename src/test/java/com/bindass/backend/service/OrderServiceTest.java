@@ -324,4 +324,152 @@ class OrderServiceTest {
         assertEquals(2499.0, (double) o.get("totalAmount"), 0.001); // 2499 ≥ 1299 → free shipping
         assertEquals("rzp_new", out.get("razorpayOrderId"));
     }
+
+    // ───────────────────────── webhook: handleCapturedPayment ─────────────────────────
+
+    private void claimReturns(Order o) {
+        when(mongoTemplate.findAndModify(any(Query.class), any(UpdateDefinition.class), any(FindAndModifyOptions.class), eq(Order.class))).thenReturn(o);
+    }
+
+    private void neverClaims() {
+        verify(mongoTemplate, never()).findAndModify(any(Query.class), any(UpdateDefinition.class), any(FindAndModifyOptions.class), eq(Order.class));
+    }
+
+    @Test
+    void webhook_confirmsAPendingOrder_takesStockOnce_andNeedsNoBrowserSignature() {
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(order("A", "u1", "rzp_A", OrderStatus.PENDING, PaymentStatus.PENDING)));
+        claimReturns(order("A", "u1", "rzp_A", OrderStatus.CONFIRMED, PaymentStatus.PAID));
+        when(productService.tryDecrementStock("p1", "M", 2)).thenReturn(true);
+
+        service.handleCapturedPayment("rzp_A", "pay_1", 249900, "INR");
+
+        verify(productService, times(1)).tryDecrementStock("p1", "M", 2);
+        verify(paymentService, never()).verifySignature(any(), any(), any());
+        ArgumentCaptor<UpdateDefinition> upd = ArgumentCaptor.forClass(UpdateDefinition.class);
+        verify(mongoTemplate).findAndModify(any(Query.class), upd.capture(), any(FindAndModifyOptions.class), eq(Order.class));
+        String u = upd.getValue().getUpdateObject().toString();
+        assertTrue(u.contains("Razorpay webhook"), u);
+        assertTrue(u.contains("pay_1"), u);
+        assertFalse(u.contains("razorpaySignature"), u); // no browser signature exists on this path
+    }
+
+    @Test
+    void webhook_amountMismatch_isNotApplied_andIsFlaggedForReview() {
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(order("A", "u1", "rzp_A", OrderStatus.PENDING, PaymentStatus.PENDING)));
+
+        service.handleCapturedPayment("rzp_A", "pay_1", 100, "INR"); // order expects 249900
+
+        neverClaims();
+        verifyNoInteractions(productService);
+        ArgumentCaptor<UpdateDefinition> upd = ArgumentCaptor.forClass(UpdateDefinition.class);
+        verify(mongoTemplate).updateFirst(any(Query.class), upd.capture(), eq(Order.class));
+        assertTrue(upd.getValue().getUpdateObject().toString().contains("NOT applied"));
+    }
+
+    @Test
+    void webhook_wrongCurrency_isNotApplied() {
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(order("A", "u1", "rzp_A", OrderStatus.PENDING, PaymentStatus.PENDING)));
+
+        service.handleCapturedPayment("rzp_A", "pay_1", 249900, "USD");
+
+        neverClaims();
+        verifyNoInteractions(productService);
+    }
+
+    @Test
+    void webhook_unknownRazorpayOrder_isIgnoredWithoutError() {
+        when(orderRepository.findByRazorpayOrderId("rzp_nope")).thenReturn(Optional.empty());
+
+        assertDoesNotThrow(() -> service.handleCapturedPayment("rzp_nope", "pay_1", 249900, "INR"));
+
+        verifyNoInteractions(productService, paymentService, mongoTemplate);
+    }
+
+    @Test
+    void webhook_blankIds_areIgnored() {
+        service.handleCapturedPayment(null, "pay_1", 249900, "INR");
+        service.handleCapturedPayment("rzp_A", " ", 249900, "INR");
+        verifyNoInteractions(orderRepository, productService, mongoTemplate);
+    }
+
+    @Test
+    void webhook_afterTheBrowserAlreadyConfirmed_isANoOp() {
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(order("A", "u1", "rzp_A", OrderStatus.CONFIRMED, PaymentStatus.PAID)));
+
+        service.handleCapturedPayment("rzp_A", "pay_1", 249900, "INR");
+
+        neverClaims();
+        verifyNoInteractions(productService, paymentService);
+    }
+
+    @Test
+    void webhook_losingTheRaceToTheBrowser_neverTakesStockTwice() {
+        // our read saw PENDING, but by the time we claim, the browser callback has already won
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(order("A", "u1", "rzp_A", OrderStatus.PENDING, PaymentStatus.PENDING)));
+        claimReturns(null);
+        when(orderRepository.findById("A")).thenReturn(Optional.of(order("A", "u1", "rzp_A", OrderStatus.CONFIRMED, PaymentStatus.PAID))); // pay_1
+
+        assertDoesNotThrow(() -> service.handleCapturedPayment("rzp_A", "pay_1", 249900, "INR"));
+
+        verifyNoInteractions(productService);
+    }
+
+    @Test
+    void webhook_aDifferentPaymentOnAnAlreadyPaidOrder_isSwallowedNotRetried() {
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(order("A", "u1", "rzp_A", OrderStatus.PENDING, PaymentStatus.PENDING)));
+        claimReturns(null);
+        when(orderRepository.findById("A")).thenReturn(Optional.of(order("A", "u1", "rzp_A", OrderStatus.CONFIRMED, PaymentStatus.PAID))); // pay_1
+
+        // would throw BadRequestException inside; the webhook must NOT bubble it up (Razorpay would retry forever)
+        assertDoesNotThrow(() -> service.handleCapturedPayment("rzp_A", "pay_OTHER", 249900, "INR"));
+
+        verifyNoInteractions(productService);
+    }
+
+    @Test
+    void webhook_paymentOnACancelledOrder_isRefundedOnce_andStockUntouched() throws Exception {
+        Order cancelled = order("A", "u1", "rzp_A", OrderStatus.CANCELLED, PaymentStatus.PENDING);
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(cancelled));
+        claimReturns(cancelled);
+
+        service.handleCapturedPayment("rzp_A", "pay_late", 249900, "INR");
+
+        verify(paymentService, times(1)).initiateRefund("pay_late", 2499);
+        verifyNoInteractions(productService);
+        ArgumentCaptor<UpdateDefinition> upd = ArgumentCaptor.forClass(UpdateDefinition.class);
+        verify(mongoTemplate).updateFirst(any(Query.class), upd.capture(), eq(Order.class));
+        assertTrue(upd.getValue().getUpdateObject().toString().contains("REFUNDED"));
+    }
+
+    @Test
+    void webhook_duplicateDeliveryForACancelledOrder_doesNotRefundTwice() throws Exception {
+        Order cancelled = order("A", "u1", "rzp_A", OrderStatus.CANCELLED, PaymentStatus.PENDING);
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(cancelled));
+        claimReturns(null); // first delivery already claimed it
+
+        service.handleCapturedPayment("rzp_A", "pay_late", 249900, "INR");
+
+        verify(paymentService, never()).initiateRefund(any(), anyDouble());
+    }
+
+    @Test
+    void webhook_failedRefundOfALatePayment_leavesTheOrderFlaggedRefundFailed() throws Exception {
+        Order cancelled = order("A", "u1", "rzp_A", OrderStatus.CANCELLED, PaymentStatus.PENDING);
+        when(orderRepository.findByRazorpayOrderId("rzp_A")).thenReturn(Optional.of(cancelled));
+        claimReturns(cancelled);
+        doThrow(new RuntimeException("gateway down")).when(paymentService).initiateRefund(any(), anyDouble());
+
+        assertDoesNotThrow(() -> service.handleCapturedPayment("rzp_A", "pay_late", 249900, "INR"));
+
+        // the claim itself parks the order in REFUND_FAILED, and a failure must never flip it to REFUNDED
+        ArgumentCaptor<UpdateDefinition> claim = ArgumentCaptor.forClass(UpdateDefinition.class);
+        verify(mongoTemplate).findAndModify(any(Query.class), claim.capture(), any(FindAndModifyOptions.class), eq(Order.class));
+        assertTrue(claim.getValue().getUpdateObject().toString().contains("REFUND_FAILED"));
+
+        ArgumentCaptor<UpdateDefinition> note = ArgumentCaptor.forClass(UpdateDefinition.class);
+        verify(mongoTemplate).updateFirst(any(Query.class), note.capture(), eq(Order.class));
+        String json = note.getValue().getUpdateObject().toString();
+        assertTrue(json.contains("manually"), json);
+        assertFalse(json.contains("paymentStatus"), json);
+    }
 }
